@@ -1,0 +1,115 @@
+/* Define the custom animation */
+@keyframes skillAppear {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(var(--random-x), var(--random-y)) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+/* Base style for skill tags */
+.skill-tag {
+    opacity: 0;
+}
+
+/* Animation class that will be added by AOS */
+.skill-tag.aos-animate {
+    animation: skillAppear 1.5s ease-in-out forwards;
+}
+
+/* Individual random positions for each skill */
+.skill-tag:nth-child(1) { --random-x: 100px; --random-y: -50px; animation-delay: 0s; }
+.skill-tag:nth-child(2) { --random-x: -80px; --random-y: 70px; animation-delay: 0.15s; }
+.skill-tag:nth-child(3) { --random-x: 60px; --random-y: 80px; animation-delay: 0.3s; }
+.skill-tag:nth-child(4) { --random-x: -120px; --random-y: -60px; animation-delay: 0.45s; }
+.skill-tag:nth-child(5) { --random-x: 90px; --random-y: -80px; animation-delay: 0.6s; }
+.skill-tag:nth-child(6) { --random-x: -70px; --random-y: 50px; animation-delay: 0.75s; }
+.skill-tag:nth-child(7) { --random-x: 110px; --random-y: 60px; animation-delay: 0.9s; }
+
+#about {
+    overflow: hidden;
+}
+/* Box animation: Fade-in and scale up */
+.custom-anim-box {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fade-scale-up 1s ease-out forwards;
+}
+
+.custom-anim-box:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.custom-anim-box:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+/* Fade-in and scale-up animation for the box */
+@keyframes fade-scale-up {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Date animation: Fade-in */
+.custom-anim-date {
+    opacity: 0;
+    animation: fade-in 0.6s ease-out forwards;
+}
+
+.custom-anim-date:nth-child(1) {
+    animation-delay: 1s; /* Starts after box animation */
+}
+
+.custom-anim-date:nth-child(2) {
+    animation-delay: 1.4s; 
+}
+
+.custom-anim-date:nth-child(3) {
+    animation-delay: 1.8s;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Text (p element) animation: Fade-in */
+.custom-anim-box p {
+    opacity: 0;
+    animation: fade-in-text 0.6s ease-out forwards;
+}
+
+.custom-anim-box p:nth-child(2) {
+    animation-delay: 1.4s; /* Starts after date is visible */
+}
+
+.custom-anim-box p:nth-child(3) {
+    animation-delay: 1.8s;
+}
+
+/* Fade-in text animation */
+@keyframes fade-in-text {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
+    
+</head>
+<body class="bg-[#FBF8CC] text-[#03045E] font-sans">
+    <div class="px-16 mx-auto p-6">
+        <div class="flex justify-between items-center w-full" id="nav-bar">
+            <h1 class="text-4xl font-semibold">Saurav Bista</h1>
+            <div class="flex space-x-14 flex-grow justify-center mr-28">
+                <p class="font-normal text-lg">Home</p>
+                <p class="font-normal text-lg">Blog</p>
+                <p class="font-normal text-lg">About</p>
+            </div>
+            <div class="flex space-x-14 text-2xl">
+                <a href="https://www.linkedin.com/in/saurav-bista" target="_blank" class="text-[#03045E] hover:text-[#0077b5]">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:sauravbista10@example.com" class="text-[#03045E] hover:text-[#d44638]">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/saurav___bista" target="_blank" class="text-[#03045E] hover:text-[#e1306c]">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Adjusting flex-direction to row and adding space between content -->
+        <div class="flex justify-between items-center mt-28" id="body-section">
+            <div class="flex flex-col text-left space-y-2 ml-28">
+                <p class="font-semibold text-xl">Hello, I'm Saurav,</p>
+                <p class="font-extrabold text-8xl">Content <br/>Writer</p>
+                <p class="font-semibold text-xl">based in Nepal.</p>
+                <a href="/resume-saurav.pdf" target="_blank" class="inline-block py-2 px-2 w-32 text-center border-2 border-black bg-[#F5EE84] hover:bg-black hover:text-white rounded-md">
+                    Resume
+                </a>
+            </div>
+            <div class="flex justify-center items-center space-y-4 mr-28">
+                <img src="/static/img/sauravbista.png" alt="Saurav Bista">
+            </div>
+        </div>
+        <div id="about">
+            <p class="font-extrabold text-8xl text-[#F5EE84] mt-36">about.</p>
+            <p class="font-semibold text-xl w-[70%] mt-10 mb-24 leading-relaxed w-[200px]">
+                I'm a writer at heart and a tech enthusiast by trade. Writing isn’t just something I do—it’s how I make sense of the world. Whether through personal reflections, storytelling, or web projects, I strive to create work that resonates. With a background in Computer Science and over three years of content writing experience, I blend creativity with structure, exploring ideas that inspire and connect.
+            </p>
+        
+            <!-- Bullet points section -->
+            <ul class="mt-6 space-y-12 pl-6 list-disc" style="margin-left: 200px;">
+                <!-- Bullet 1 -->
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box">
+                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
+                            <strong class="custom-anim-date">2020-2021:</strong> 
+                            Focused on optimizing websites for search engines and increasing online visibility through effective digital marketing strategies. Worked on content creation, keyword research, and improving web traffic for various clients.
+                        </p>
+                    </div>
+                </li>
+                
+                <!-- Bullet 2 -->
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" style="animation-delay: 400ms;">
+                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
+                            <strong class="custom-anim-date">2022-2024:</strong> 
+                            Specialized in writing compelling web copy for various industries, ensuring clarity, engagement, and conversion. Developed content for websites, landing pages, and blog posts to drive user interaction and brand recognition.
+                        </p>
+                    </div>
+                </li>
+                
+                <!-- Bullet 3 -->
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" style="animation-delay: 800ms;">
+                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
+                            <strong class="custom-anim-date">2025 and Beyond:</strong> 
+                            Pursuing a passion for creative writing, focusing on storytelling, content creation, and exploring new narratives in both digital and traditional formats. Looking to inspire and connect with audiences through the power of words.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        
+        <div id="skills" class="mt-28">
+            <p class="font-extrabold text-8xl text-[#F5EE84]" 
+               data-aos="fade-up">skills.</p>
+            <div class="flex flex-wrap gap-4 mt-10">
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Content Writing</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">SEO Optimization</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Web Development</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Python</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Flask</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Tailwind CSS</span>
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                      data-aos="custom">Creative Writing</span>
+            </div>
+        </div>
+        
+
+        <!-- Blog Posts Section -->
+        <div class="mt-12">
+            {% for post in posts %}
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-4">
+                <h2 class="text-2xl font-semibold">{{ post.title }}</h2>
+                <p class="text-gray-600 text-sm">{{ post.date }}</p>
+                <p class="mt-2">{{ post.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+    duration: 0, // Set to 0 since we're using our own animation duration
+    once: true,
+    offset: 100,
+    disable: 'phone' // Optionally disable on mobile
+    
+});
+AOS.init({
+    duration: 1000,  // Set the duration of the animation
+    once: true,      // Animation runs once when it comes into view
+    offset: 100,     // Add an offset for when the animation triggers
+    disable: 'phone' // Optionally disable on mobile if needed
+});
+AOS.init({
+    duration: 1000,  // Set the duration of the animation
+    once: true,      // Animation runs once when it comes into view
+    offset: 100,     // Add an offset for when the animation triggers
+    disable: 'phone' // Optionally disable on mobile if needed
+});
+
+
+</script>
+
+</body>
+</html>
