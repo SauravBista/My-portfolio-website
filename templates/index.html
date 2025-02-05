@@ -14,12 +14,13 @@
 </head>
 <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
     <div class="px-16 mx-auto p-6">
-        <div class="flex justify-between items-center w-full" id="nav-bar">
+        <div class="flex justify-between items-center w-full sticky top-0 bg-[#FBF8CC] py-4 z-50" id="nav-bar">
             <h1 class="text-4xl font-semibold">Saurav Bista</h1>
             <div class="flex space-x-14 flex-grow justify-center mr-28">
-                <p class="font-normal text-lg">Home</p>
+                <p class="font-normal text-lg"><a href="#body-section">Home</a></p>
                 <p class="font-normal text-lg">Blog</p>
-                <p class="font-normal text-lg">About</p>
+                <p class="font-normal text-lg"><a href="#about">About</a></p>
+                <p class="font-normal text-lg"><a href="#works">Works</a></p>
             </div>
             <div class="flex space-x-14 text-2xl">
                 <a href="https://www.linkedin.com/in/saurav-bista" target="_blank" class="text-[#03045E] hover:text-[#0077b5]">
@@ -35,7 +36,7 @@
         </div>
 
         <!-- Adjusting flex-direction to row and adding space between content -->
-        <div class="flex justify-between items-center mt-28" id="body-section">
+        <div class="flex justify-between items-center mb-20 pt-40" id="body-section" >
             <div class="flex flex-col text-left space-y-2 ml-28">
                 <p class="font-semibold text-xl">Hello, I'm Saurav,</p>
                 <p class="font-extrabold text-8xl">Content <br/>Writer</p>
@@ -48,51 +49,80 @@
                 <img src="/static/img/sauravbista.png" alt="Saurav Bista">
             </div>
         </div>
-        <div id="about">
-            <p class="font-extrabold text-8xl text-[#F5EE84] mt-36">about.</p>
+        <div id="about" class="pt-16">
+            <p class="font-extrabold text-8xl text-[#F5EE84]">about.</p>
             <p class="font-semibold text-xl w-[70%] mt-10 mb-24 leading-relaxed w-[200px]">
                 I'm a writer at heart and a tech enthusiast by trade. Writing isn’t just something I do—it’s how I make sense of the world. Whether through personal reflections, storytelling, or web projects, I strive to create work that resonates. With a background in Computer Science and over three years of content writing experience, I blend creativity with structure, exploring ideas that inspire and connect.
             </p>
-        
-            <!-- Bullet points section -->
+            
             <ul class="mt-6 space-y-12 pl-6 list-disc" style="margin-left: 200px;">
                 <!-- Bullet 1 -->
-                <li class="font-semibold text-xl text-[#03045E] custom-anim-box">
-                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
-                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
-                            <strong class="custom-anim-date">2020-2021:</strong> 
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+                    <div class="translucent-box bg-[#A3D1F1] bg-opacity-60 p-6 rounded-lg">
+                        <strong>2020-2021:</strong>
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px] custom-anim-text">
                             Focused on optimizing websites for search engines and increasing online visibility through effective digital marketing strategies. Worked on content creation, keyword research, and improving web traffic for various clients.
                         </p>
                     </div>
                 </li>
-                
                 <!-- Bullet 2 -->
-                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" style="animation-delay: 400ms;">
-                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
-                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
-                            <strong class="custom-anim-date">2022-2024:</strong> 
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+                    <div class="translucent-box bg-[#A8E6A3] bg-opacity-60 p-6 rounded-lg">
+                        <strong>2022-2024:</strong>
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px] custom-anim-text">
                             Specialized in writing compelling web copy for various industries, ensuring clarity, engagement, and conversion. Developed content for websites, landing pages, and blog posts to drive user interaction and brand recognition.
                         </p>
                     </div>
                 </li>
-                
                 <!-- Bullet 3 -->
-                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" style="animation-delay: 800ms;">
-                    <div class="translucent-box bg-[#C1B5FF] bg-opacity-60 p-6 rounded-lg">
-                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px]">
-                            <strong class="custom-anim-date">2025 and Beyond:</strong> 
+                <li class="font-semibold text-xl text-[#03045E] custom-anim-box" data-aos="fade-up" data-aos-duration="600" data-aos-delay="400">
+                    <div class="translucent-box bg-[#F4C2C2] bg-opacity-60 p-6 rounded-lg">
+                        <strong>2025 and Beyond:</strong>
+                        <p class="ml-12 mt-4 text-md text-[#03045E] leading-relaxed w-[800px] custom-anim-text">
                             Pursuing a passion for creative writing, focusing on storytelling, content creation, and exploring new narratives in both digital and traditional formats. Looking to inspire and connect with audiences through the power of words.
                         </p>
                     </div>
                 </li>
             </ul>
             
-            
-            
-            
-            
-            
-            
+        </div>
+        <div id ="works"><p class="font-extrabold text-8xl text-[#F5EE84] mt-16 pt-20">my works.</p>
+            <p class="font-semibold text-xl w-[70%] mt-10 mb-24 leading-relaxed w-[200px]">
+                Explore some of my most inspiring works that have fueled my creative writing journey and deepened my path within.            </p></div>
+                <div class="flex justify-center items-center min-h-screen">
+                    <div class="w-[1200px] h-[1000px] bg-white bg-opacity-40 p-10 flex justify-center items-center rounded-lg">
+                <section class="blog-section flex flex-wrap justify-center gap-20 px-24 bg-cover bg-center relative">
+                    <!-- Blog Box 1 -->
+                    <a href="https://medium.com/@sauravbista10/the-unraveling-finding-meaning-amidst-suffering-dd94776af649" target="_blank"><div class="blog-box w-[400px] bg-white bg-opacity-70 border-2 border-black rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 text-center">
+                        <img src="/static/img/blog1.jpg" alt="Blog 1" class="w-full h-[300px] object-cover">
+                        <h3 class="blog-title text-lg font-bold bg-[#A3D1F1]">Finding Meaning Amidst Suffering</h3>
+                    </div></a>
+                    <!-- Blog Box 2 -->
+                    <a href="https://medium.com/@sauravbista10/stabilizing-the-mind-70a981ab80c6" target="_blank"><div class="blog-box w-[400px] bg-white bg-opacity-70 border-2 border-black rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 text-center">
+                        <img src="/static/img/blog2.png" alt="Blog 2" class="w-full h-[300px] object-cover">
+                        <h3 class="blog-title text-lg font-bold bg-[#A3D1F1]">Stabilizing the Mind</h3>
+                    </div></a>
+                    <!-- Blog Box 3 -->
+                    <a href="https://medium.com/@sauravbista10/loving-the-silence-668f621fd6a0" target="_blank"><div class="blog-box w-[400px] bg-white bg-opacity-70 border-2 border-black rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 text-center">
+                        <img src="/static/img/blog3.jpg" alt="Blog 3" class="w-full h-[300px] object-cover">
+                        <h3 class="blog-title text-lg font-bold bg-[#A3D1F1]">Loving the Silence</h3>
+                    </div></a>
+                    <!-- Blog Box 4 -->
+                    <a href="https://medium.com/follower-booster-hub/the-healing-power-of-nature-lessons-from-the-outdoors-9741e99292d5" target="_blank"><div class="blog-box w-[400px] bg-white bg-opacity-70 border-2 border-black rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 text-center">
+                        <img src="/static/img/blog4.jpg" alt="Blog 4" class="w-full h-[300px] object-cover">
+                        <h3 class="blog-title text-lg font-bold bg-[#A3D1F1]">The Healing Power of Nature</h3>
+                    </div></a>
+                </section>
+            </div>
+            </div>
+                
+
+                
+                
+                
+                
+        
+        
             
         
         
@@ -100,9 +130,9 @@
             <p class="font-extrabold text-8xl text-[#F5EE84]" 
                data-aos="fade-up">skills.</p>
             <div class="flex flex-wrap gap-4 mt-10">
-                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md " 
                       data-aos="custom">Content Writing</span>
-                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
+                <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md " 
                       data-aos="custom">SEO Optimization</span>
                 <span class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md" 
                       data-aos="custom">Web Development</span>
@@ -137,19 +167,8 @@
     offset: 100,
     disable: 'phone' // Optionally disable on mobile
     
-});
-AOS.init({
-    duration: 1000,  // Set the duration of the animation
-    once: true,      // Animation runs once when it comes into view
-    offset: 100,     // Add an offset for when the animation triggers
-    disable: 'phone' // Optionally disable on mobile if needed
-});
-AOS.init({
-    duration: 1000,  // Set the duration of the animation
-    once: true,      // Animation runs once when it comes into view
-    offset: 100,     // Add an offset for when the animation triggers
-    disable: 'phone' // Optionally disable on mobile if needed
-});
+    });
+   
 
 
 </script>

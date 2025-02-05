@@ -36,75 +36,28 @@
 #about {
     overflow: hidden;
 }
-/* Box animation: Fade-in and scale up */
 .custom-anim-box {
     opacity: 0;
-    transform: scale(0.8);
-    animation: fade-scale-up 1s ease-out forwards;
+    transform: translateY(30px); /* Initial state: Off-screen */
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transition effect */
 }
 
-.custom-anim-box:nth-child(2) {
-    animation-delay: 0.4s;
+.custom-anim-text {
+    opacity: 1;
+    transition: opacity 0.6s ease-in-out; /* Text fade-in transition */
 }
 
-.custom-anim-box:nth-child(3) {
-    animation-delay: 0.8s;
-}
-
-/* Fade-in and scale-up animation for the box */
-@keyframes fade-scale-up {
+@keyframes slide-up {
     0% {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translateY(30px); /* Move up from below */
     }
     100% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0); /* Final position at its normal place */
     }
 }
 
-/* Date animation: Fade-in */
-.custom-anim-date {
-    opacity: 0;
-    animation: fade-in 0.6s ease-out forwards;
-}
-
-.custom-anim-date:nth-child(1) {
-    animation-delay: 1s; /* Starts after box animation */
-}
-
-.custom-anim-date:nth-child(2) {
-    animation-delay: 1.4s; 
-}
-
-.custom-anim-date:nth-child(3) {
-    animation-delay: 1.8s;
-}
-
-@keyframes fade-in {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Text (p element) animation: Fade-in */
-.custom-anim-box p {
-    opacity: 0;
-    animation: fade-in-text 0.6s ease-out forwards;
-}
-
-.custom-anim-box p:nth-child(2) {
-    animation-delay: 1.4s; /* Starts after date is visible */
-}
-
-.custom-anim-box p:nth-child(3) {
-    animation-delay: 1.8s;
-}
-
-/* Fade-in text animation */
 @keyframes fade-in-text {
     0% {
         opacity: 0;
@@ -113,3 +66,7 @@
         opacity: 1;
     }
 }
+html {
+    scroll-behavior: smooth;
+}
+
