@@ -1,4 +1,4 @@
-/* Define the custom animation */
+
 @keyframes skillAppear {
     0% {
         opacity: 0;
@@ -17,11 +17,15 @@
 /* Base style for skill tags */
 .skill-tag {
     opacity: 0;
+    background-color: #F5EE84;
+    position: relative;
+    transform-origin: center;
+    will-change: transform, opacity;
 }
 
 /* Animation class that will be added by AOS */
 .skill-tag.aos-animate {
-    animation: skillAppear 1.5s ease-in-out forwards;
+    animation: skillAppear 1s ease-in-out forwards; /* Faster animation */
 }
 
 /* Individual random positions for each skill */
@@ -33,40 +37,78 @@
 .skill-tag:nth-child(6) { --random-x: -70px; --random-y: 50px; animation-delay: 0.75s; }
 .skill-tag:nth-child(7) { --random-x: 110px; --random-y: 60px; animation-delay: 0.9s; }
 
-#about {
-    overflow: hidden;
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
 }
+
+/* Hide overflow for sections */
+#about, #skills {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Skill hover effect */
+.skill-tag:hover {
+    transform: translateY(-5px) scale(1.05); /* Add scaling on hover */
+    transition: transform 0.2s ease; /* Shorter transition time */
+}
+
+/* General animation for fade-in and slide-up effects */
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Slide-in effect for elements */
+@keyframes fadeSlide {
+    from {
+        transform: translateX(-250px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Custom animation for boxes */
 .custom-anim-box {
     opacity: 0;
-    transform: translateY(30px); /* Initial state: Off-screen */
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Transition effect */
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .custom-anim-text {
     opacity: 1;
-    transition: opacity 0.6s ease-in-out; /* Text fade-in transition */
+    transition: opacity 0.6s ease-in-out;
+}
+/* Transparent border with details */
+.section {
+    border: 2px solid transparent;  /* Transparent border */
+    border-image: linear-gradient(to right, #F5EE84, #ff9a9e) 1; /* Gradient border detail */
+    padding: 20px; /* Adjust padding for inner spacing */
 }
 
-@keyframes slide-up {
-    0% {
-        opacity: 0;
-        transform: translateY(30px); /* Move up from below */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0); /* Final position at its normal place */
-    }
-}
-
-@keyframes fade-in-text {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-html {
-    scroll-behavior: smooth;
+/* Example for left and right sections */
+.left-section, .right-section {
+    border: 2px solid transparent;
+    border-image: linear-gradient(to bottom, #F5EE84, #ff9a9e) 1; /* Gradient border detail */
+    padding: 20px;
 }
 
