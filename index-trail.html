@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
@@ -24,6 +25,7 @@
                     <a href="#about" class="nav-link font-normal text-lg">About</a>
                     <a href="#works" class="nav-link font-normal text-lg">Works</a>
                     <a href="#skills" class="nav-link font-normal text-lg">Skills</a>
+                    <a href="#skills" class="nav-link font-normal text-lg">Gallery</a>
                 </div>
                 <div class="flex space-x-8 text-2xl">
                     <a href="https://www.linkedin.com/in/saurav-bista" target="_blank" class="transition-colors duration-300 hover:text-[#0077b5]">
@@ -156,9 +158,8 @@
                 Creative Writing
             </span>
         </div>
-    </section>
-    <!--Gallery section-->
-    <!-- Gallery Section -->
+        <!-- HTML -->
+<!-- HTML -->
 <section id="gallery" class="container mx-auto px-6 py-20">
     <h2 class="font-extrabold text-7xl text-[#F5EE84] mb-12 text-center" data-aos="fade-up">Gallery.</h2>
 
@@ -167,20 +168,18 @@
         <!-- Image display -->
         <div id="images-container" class="relative w-full h-[800px] overflow-hidden rounded-lg shadow-md">
             <img src="/static/img/blog1.jpg" alt="Gallery Image 1" class="gallery-image w-full h-full object-cover absolute top-0 left-0 opacity-100 transition-opacity duration-500">
-            <img src="/static/img/blog2.png" alt="Gallery Image 2" class="gallery-image w-full h-full object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500">
+            <img src="/static/img/blog2.jpg" alt="Gallery Image 2" class="gallery-image w-full h-full object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500">
             <img src="/static/img/blog3.jpg" alt="Gallery Image 3" class="gallery-image w-full h-full object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500">
-            <img src="/static/img/blog4.jpg" alt="Gallery Image 3" class="gallery-image w-full h-full object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500">
-
         </div>
 
-        <!-- Navigation Buttons -->
-        <button type="button" id="prev-button" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer">
+        <!-- Navigation Buttons - Added cursor-pointer and made buttons more clickable -->
+        <button type="button" id="prev-button" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-10 flex items-center justify-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
         </button>
 
-        <button type="button" id="next-button" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer">
+        <button type="button" id="next-button" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-10 flex items-center justify-center cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
@@ -196,6 +195,10 @@
         </div>
     </div>
 </section>
+    
+    
+
+
     
 
      <!--footer section-->  
@@ -247,32 +250,6 @@
         mirror: true,
         disable: 'mobile'
     });
-
-    // Specific handler for skills animation
-    document.addEventListener('DOMContentLoaded', () => {
-        const skillTags = document.querySelectorAll('.skill-tag');
-        
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Add a small delay before adding the animation class
-                    setTimeout(() => {
-                        entry.target.classList.add('aos-animate');
-                    }, 100);
-                } else {
-                    entry.target.classList.remove('aos-animate');
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px'
-        });
-
-        skillTags.forEach(tag => {
-            skillObserver.observe(tag);
-        });
-    });
-
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
