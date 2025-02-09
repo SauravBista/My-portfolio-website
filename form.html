@@ -1,0 +1,68 @@
+<!-- Example modifications for index.html -->
+<!-- Replace static content with template variables -->
+
+<!-- Profile Section -->
+<h1 class="text-4xl font-semibold">{{ profile.name }}</h1>
+
+<!-- Hero Section -->
+<h2 class="font-extrabold text-7xl leading-tight">{{ profile.title }}</h2>
+<p class="font-semibold text-xl">based in {{ profile.location }}.</p>
+<a href="{{ profile.resume_path }}" target="_blank" class="...">Resume</a>
+
+<!-- About Timeline Section -->
+{% for period in timeline %}
+<div
+  class="{{ period.background }} bg-opacity-60 p-8 rounded-lg animate-on-scroll"
+  data-aos="fade-up"
+>
+  <h3 class="font-bold text-xl mb-4">{{ period.period }}</h3>
+  <p class="text-lg leading-relaxed">{{ period.description }}</p>
+</div>
+{% endfor %}
+
+<!-- Blog Posts Section -->
+{% for post in blogs %}
+<a href="{{ post.url }}" target="_blank">
+  <div
+    class="blog-box w-[400px] bg-white bg-opacity-70 border-2 border-black rounded-lg overflow-hidden shadow-md hover:shadow-xl shadow-lg transform transition-transform duration-300 hover:scale-105 text-center"
+  >
+    <img
+      src="{{ post.image }}"
+      alt="{{ post.title }}"
+      class="w-full h-[300px] object-cover"
+    />
+    <h3 class="blog-title text-lg font-bold {{ post.background }}">
+      {{ post.title }}
+    </h3>
+  </div>
+</a>
+{% endfor %}
+
+<!-- Skills Section -->
+<div class="flex flex-wrap gap-4 mt-10">
+  {% for skill in skills %}
+  <span
+    class="skill-tag px-4 py-2 text-lg font-semibold border-2 border-black rounded-md"
+    data-aos="custom"
+  >
+    {{ skill }}
+  </span>
+  {% endfor %}
+</div>
+
+<!-- Gallery Section -->
+<div
+  id="images-container"
+  class="relative w-full h-[800px] overflow-hidden rounded-lg shadow-md"
+>
+  {% for image in gallery %}
+  <img
+    src="{{ image.src }}"
+    alt="{{ image.alt }}"
+    class="gallery-image w-full h-full object-cover absolute top-0 left-0 {% if loop.first %}opacity-100{% else %}opacity-0{% endif %} transition-opacity duration-500"
+  />
+  {% endfor %}
+</div>
+
+<!-- Footer -->
+<p>&copy; {{ get_year() }} {{ profile.name }}. All rights reserved.</p>
