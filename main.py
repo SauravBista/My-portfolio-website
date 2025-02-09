@@ -14,7 +14,26 @@ def home():
 
 @app.route('/gallery')
 def gallery():
-    return render_template('gallery.html')  # Renders the gallery page
+    profile = {
+        "name": "Saurav Bista",
+        "title": "Tech Enthusiast | StoryTeller",
+        "linkedin": "https://www.linkedin.com/in/sauravbista",
+        "email": "sauravbista10@gmail.com",
+        "instagram": "https://www.instagram.com/saurav___bista",
+    }
+
+    gallery_images = [
+        {"src": "/static/gallery-website/main1.JPG", "alt": "Gallery Image 1"},
+        {"src": "/static/gallery-website/main2.JPG", "alt": "Gallery Image 2"},
+        {"src": "/static/gallery-website/main3.jpg", "alt": "Gallery Image 3"},
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+    ]
+
+    return render_template("gallery.html", profile=profile, gallery=gallery_images)
 
 if __name__ == '__main__':
     app.run(debug=True)
