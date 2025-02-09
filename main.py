@@ -12,14 +12,16 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')  # Renders the index page
 
+
 @app.route('/gallery')
 def gallery():
+    
     profile = {
         "name": "Saurav Bista",
         "title": "Tech Enthusiast | StoryTeller",
         "linkedin": "https://www.linkedin.com/in/sauravbista",
-        "email": "sauravbista10@gmail.com",
-        "instagram": "https://www.instagram.com/saurav___bista",
+        "email": "saurav@example.com",
+        "instagram": "https://www.instagram.com/sauravbista",
     }
 
     gallery_images = [
@@ -27,10 +29,13 @@ def gallery():
         {"src": "/static/gallery-website/main2.JPG", "alt": "Gallery Image 2"},
         {"src": "/static/gallery-website/main3.jpg", "alt": "Gallery Image 3"},
         {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
-        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
-        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
-        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
-        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4"},
+        {"src": "/static/gallery-website/image1.jpg", "alt": "Gallery Image 5"},
+        {"src": "/static/gallery-website/image2.jpg", "alt": "Gallery Image 6"},
+        {"src": "/static/gallery-website/image3.jpg", "alt": "Gallery Image 7"},
+        {"src": "/static/gallery-website/image4.jpg", "alt": "Gallery Image 8"},
+        {"src": "/static/gallery-website/image5.jpg", "alt": "Gallery Image 9"},
+       
+
     ]
 
     return render_template("gallery.html", profile=profile, gallery=gallery_images)
