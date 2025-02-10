@@ -1,208 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery | {{ profile.name }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-    <!-- Image Modal -->
-    <!-- Fullscreen Modal with Blur Effect -->
-<!-- Fullscreen Modal with Blur Effect -->
-<div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
-  <button 
-    id="closeButton" 
-    class="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 transition-all"
-    onclick="closeModal()"
-  >
-    &times;
-  </button>
-  <img id="modalImage" class="max-w-full max-h-[90vh] border-4 border-gray-200 rounded-lg shadow-lg" />
-</div>
+{% extends 'base.html' %}
 
+{% block title %}Gallery | {{ profile.name }}{% endblock %}
 
-    
+{% block content %}
+  <section id="gallery" class="container mx-auto px-6 py-20">
+    <h2 class="font-extrabold text-7xl text-[#c8dfff] mb-12 text-center" data-aos="fade-up">
+      My Gallery
+    </h2>
 
-  </head>
-  <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
-    <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full top-0 bg-[#FBF8CC] shadow-sm z-50">
-      <div class="relative container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-          <h1 class="text-4xl font-semibold">{{ profile.name }}</h1>
-          <div class="flex space-x-12">
-            <a
-              href="{{ url_for('home') }}#home"
-              class="nav-link font-normal text-lg"
-              >Home</a
-            >
-            <a
-              href="{{ url_for('home') }}#about"
-              class="nav-link font-normal text-lg"
-              >About</a
-            >
-            <a
-              href="{{ url_for('home') }}#works"
-              class="nav-link font-normal text-lg"
-              >Works</a
-            >
-            <a
-              href="{{ url_for('home') }}#skills"
-              class="nav-link font-normal text-lg"
-              >Skills</a
-            >
-            <a
-              href="{{ url_for('gallery') }}"
-              class="nav-link font-normal text-lg"
-              >Gallery</a
-            >
-          </div>
-          <div class="flex space-x-8 text-2xl">
-            <a
-              href="{{ profile.linkedin }}"
-              target="_blank"
-              class="transition-colors duration-300 hover:text-[#0077b5]"
-            >
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="mailto:{{ profile.email }}"
-              class="transition-colors duration-300 hover:text-[#d44638]"
-            >
-              <i class="fas fa-envelope"></i>
-            </a>
-            <a
-              href="{{ profile.instagram }}"
-              target="_blank"
-              class="transition-colors duration-300 hover:text-[#e1306c]"
-            >
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
+    <!-- Gallery Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for image in gallery %}
+      <div class="relative group">
+        <img src="{{ image.src }}" alt="{{ image.alt }}" class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')" />
+        
+        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')" class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">
+            View Full Image
+          </button>
         </div>
       </div>
-    </nav>
+      {% endfor %}
+    </div>
+  </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="container mx-auto px-6 py-20">
-      <h2
-        class="font-extrabold text-7xl text-[#F5EE84] mb-12 text-center"
-        data-aos="fade-up"
-      >
-        My Gallery
-      </h2>
+  <!-- Modal for Image View -->
+  <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
+    <div class="relative w-full max-w-4xl p-4 bg-white rounded-lg">
+      <!-- Close Button -->
+      <button id="closeButton" class="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 transition-all" onclick="closeModal()">×</button>
 
-      <!-- Gallery Grid -->
-      <!-- Gallery Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-  {% for image in gallery %}
-  <div class="relative group">
-    <img
-      src="{{ image.src }}"
-      alt="{{ image.alt }}"
-      class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer"
-      onclick="openModal('{{ image.src }}')"
-    />
-    <div
-      class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-    >
-      <button
-        onclick="openModal('{{ image.src }}')"
-        class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300"
-      >
-        View Full Image
-      </button>
+      <!-- Modal Content (Image) -->
+      <img id="modalImage" class="max-w-full max-h-[80vh] object-contain" />
+
+      <!-- Location Section (Top Right with Icon) -->
+      <div id="location" class="absolute top-4 right-4 flex items-center space-x-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md hidden">
+        <i class="fas fa-location-pin"></i>
+        <p class="text-sm font-semibold"></p>
+      </div>
+
+      <!-- Description Section (Bottom Center) -->
+      <div id="description" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-3 rounded-md text-center hidden max-w-md">
+        <p class="text-sm"></p>
+      </div>
     </div>
   </div>
-  {% endfor %}
-</div>
+  
+{% endblock %}
 
-    </section>
+{% block scripts %}
+  <script>
+    AOS.init({
+      duration: 800,
+      once: false,
+      offset: 100,
+      mirror: true,
+      disable: "mobile",
+    });
 
-    <footer class="bg-[#03045E] text-[#FBF8CC] py-12 mt-20">
-      <div
-        class="relative container mx-auto flex justify-between items-center px-16"
-      >
-        <div class="flex flex-col">
-          <p class="font-semibold text-lg">{{ profile.name }}</p>
-          <p class="text-sm mt-2">
-            {{ profile.title }} | Tech Enthusiast | StoryTeller
-          </p>
-        </div>
+    // Open Modal Function
+    function openModal(imageSrc, location, description) {
+      const modalImage = document.getElementById("modalImage");
+      const modal = document.getElementById("imageModal");
+      const locationElement = document.getElementById("location");
+      const descriptionElement = document.getElementById("description");
+      const navbar = document.getElementById("navbar");
 
-        <div class="flex space-x-8">
-          <a
-            href="{{ profile.linkedin }}"
-            target="_blank"
-            class="text-[#FBF8CC] hover:text-[#0077b5]"
-          >
-            <i class="fab fa-linkedin text-2xl"></i>
-          </a>
-          <a
-            href="mailto:{{ profile.email }}"
-            class="text-[#FBF8CC] hover:text-[#d44638]"
-          >
-            <i class="fas fa-envelope text-2xl"></i>
-          </a>
-          <a
-            href="{{ profile.instagram }}"
-            target="_blank"
-            class="text-[#FBF8CC] hover:text-[#e1306c]"
-          >
-            <i class="fab fa-instagram text-2xl"></i>
-          </a>
-        </div>
-      </div>
+      // Set image source
+      modalImage.src = imageSrc;
 
-      <div class="text-center mt-8 text-sm">
-        <p>&copy; 2025 {{ profile.name }}. All rights reserved.</p>
-      </div>
-    </footer>
+      // Set location and description text
+      locationElement.querySelector("p").textContent = location;
+      descriptionElement.querySelector("p").textContent = description;
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({
-        duration: 800,
-        once: false,
-        offset: 100,
-        mirror: true,
-        disable: "mobile",
-      });
-    </script>
-    <script>
-  function openModal(imageSrc) {
-    const modalImage = document.getElementById("modalImage");
-    const modal = document.getElementById("imageModal");
-    const navbar = document.getElementById("navbar");
+      // Display the modal
+      modal.classList.remove("hidden");
+      navbar.classList.add("hidden"); // Hide navbar
 
-    modalImage.src = imageSrc;
-    modal.classList.remove("hidden");
-    navbar.classList.add("hidden"); // Hide navbar
+      // Show location and description
+      locationElement.classList.remove("hidden");
+      descriptionElement.classList.remove("hidden");
+    }
 
-    // Ensure the close button stays in the same place
-    document.getElementById("closeButton").classList.add("absolute", "top-4", "right-4");
-  }
-
-  function closeModal() {
-    document.getElementById("imageModal").classList.add("hidden");
-    document.getElementById("navbar").classList.remove("hidden"); // Show navbar again
-  }
-</script>
-
-    
-    
-    
-
-  </body>
-</html>
+    // Close Modal Function
+    function closeModal() {
+      document.getElementById("imageModal").classList.add("hidden"); // Hide modal
+      document.getElementById("navbar").classList.remove("hidden"); // Show navbar again
+    }
+  </script>
+{% endblock %}

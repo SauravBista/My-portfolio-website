@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <style>
+      /* Additional styles for horizontal images */
+      .horizontal #location {
+        top: 6.4rem;
+        right: 34rem;
+        transform: none;
+      }
+      .horizontal #description {
+        bottom: 6rem;
+        left: 58rem;
+        transform: none;
+        text-align: left;
+      }
+    </style>
+    <!-- Fullscreen Modal with Blur Effect -->
+    <div
+      id="imageModal"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50"
+    >
+      <!-- Close Button -->
+      <button
+        id="closeButton"
+        class="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 transition-all"
+        onclick="closeModal()"
+      >
+        &times;
+      </button>
+
+      <!-- Modal Content (Image) -->
+      <img
+        id="modalImage"
+        class="w-[50rem] h-[58rem] border-4 border-gray-200 rounded-lg shadow-lg"
+      />
+      <!-- Location Section (Top Right with Icon) -->
+      <div
+        id="location"
+        class="absolute top-16 right-1/4 -translate-x-36 -translate-y-3 flex items-center space-x-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          class="h-6 w-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 2C8.13 2 5 5.13 5 9c0 3.22 3 6.8 7 12 4-5.2 7-8.78 7-12 0-3.87-3.13-7-7-7zm0 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
+          />
+        </svg>
+        <p class="text-sm font-semibold"></p>
+      </div>
+
+      <!-- Description Section (Bottom Center) -->
+      <div
+        id="description"
+        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-3 rounded-md text-center hidden max-w-md"
+      >
+        <p class="text-sm"></p>
+      </div>
+    </div>
+
+    {% block head_extra %}{% endblock %}
+  </head>
+
+  <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full top-0 bg-[#FBF8CC] shadow-sm z-50">
+      <div class="relative container mx-auto px-6 py-4">
+        <img
+          src="/static/img/om.png"
+          alt="Left Image"
+          class="absolute left-[-80px] h-12"
+        />
+        <img
+          src="/static/img/om.png"
+          alt="Right Image"
+          class="absolute right-[-80px] h-12"
+        />
+        <div class="flex justify-between items-center">
+          <h1 class="text-4xl font-semibold">
+            <a href="/"> {{ profile.name }}</a>
+          </h1>
+          <div class="flex space-x-12">
+            <a
+              href="{{ url_for('home') }}#home"
+              class="nav-link font-normal text-lg"
+              >Home</a
+            >
+            <a
+              href="{{ url_for('home') }}#about"
+              class="nav-link font-normal text-lg"
+              >About</a
+            >
+            <a
+              href="{{ url_for('home') }}#works"
+              class="nav-link font-normal text-lg"
+              >Works</a
+            >
+            <a
+              href="{{ url_for('home') }}#skills"
+              class="nav-link font-normal text-lg"
+              >Skills</a
+            >
+            <a
+              href="{{ url_for('gallery') }}"
+              class="nav-link font-normal text-lg"
+              >Gallery</a
+            >
+          </div>
+          <div class="flex space-x-8 text-2xl">
+            <a
+              href="{{ profile.linkedin }}"
+              target="_blank"
+              class="transition-colors duration-300 hover:text-[#0077b5]"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="mailto:{{ profile.email }}"
+              class="transition-colors duration-300 hover:text-[#d44638]"
+            >
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a
+              href="{{ profile.instagram }}"
+              target="_blank"
+              class="transition-colors duration-300 hover:text-[#e1306c]"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Block -->
+    <div class="pt-24">{% block content %}{% endblock %}</div>
+
+    <!-- Footer -->
+    <footer class="bg-[#03045E] text-[#FBF8CC] py-12 mt-20">
+      <div
+        class="relative container mx-auto flex justify-between items-center px-16"
+      >
+        <div class="flex flex-col">
+          <p class="font-semibold text-lg">{{ profile.name }}</p>
+          <p class="text-sm mt-2">
+            {{ profile.title }} | Tech Enthusiast | Storyteller
+          </p>
+        </div>
+        <div class="flex space-x-8">
+          <a
+            href="{{ profile.linkedin }}"
+            target="_blank"
+            class="text-[#FBF8CC] hover:text-[#0077b5]"
+          >
+            <i class="fab fa-linkedin text-2xl"></i>
+          </a>
+          <a
+            href="mailto:{{ profile.email }}"
+            class="text-[#FBF8CC] hover:text-[#d44638]"
+          >
+            <i class="fas fa-envelope text-2xl"></i>
+          </a>
+          <a
+            href="{{ profile.instagram }}"
+            target="_blank"
+            class="text-[#FBF8CC] hover:text-[#e1306c]"
+          >
+            <i class="fab fa-instagram text-2xl"></i>
+          </a>
+        </div>
+      </div>
+      <div class="text-center mt-8 text-sm">
+        <p>&copy; 2025 {{ profile.name }}. All rights reserved.</p>
+      </div>
+      <div
+        class="text-center mt-2 text-sm relative container mx-auto flex justify-center items-center px-16"
+      >
+        <img
+          src="/static/img/om-footer.png"
+          alt="Left Image"
+          class="absolute left-[-80px] h-12"
+        />
+
+        <!-- Right Image at the right edge -->
+        <img
+          src="/static/img/om-footer.png"
+          alt="Right Image"
+          class="absolute right-[-80px] h-12"
+        />
+        <p>
+          <a
+            href="https://www.figma.com/design/3fidiEniucatUIIj5SgKlL/Portfolio-(Community)?node-id=0-1&p=f&t=mF4MoQ8Cck15BxiP-0"
+            target="_blank"
+          >
+            <u>Design inspired by Figma</u></a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <!-- External Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+      const modalImage = document.getElementById("modalImage");
+      const locationSection = document.getElementById("location");
+      const descriptionSection = document.getElementById("description");
+      const imageModal = document.getElementById("imageModal");
+
+      // Ensure the image is loaded before accessing its natural width and height
+      modalImage.onload = () => {
+        const width = modalImage.naturalWidth;
+        const height = modalImage.naturalHeight;
+
+        if (width > height) {
+          // For horizontal image, increase width and height
+          modalImage.style.width = "65rem"; // Adjust width
+          modalImage.style.height = "55rem"; // Adjust height
+          imageModal.classList.add("horizontal");
+        } else {
+          // For vertical image, keep original size
+          modalImage.style.width = "50rem";
+          modalImage.style.height = "62rem";
+          imageModal.classList.remove("horizontal");
+        }
+      };
+    </script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
