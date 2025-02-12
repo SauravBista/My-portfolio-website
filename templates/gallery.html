@@ -23,15 +23,21 @@
       {% endfor %}
     </div>
 
-    <div class="flex justify-center mt-8 space-x-4">
-      <button type="button" id="prev-button" class="bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer" onclick="changePage(-1)">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <div class="flex justify-center mt-8 space-x-6">
+      <button type="button" id="prev-button" 
+        class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
+        onclick="changePage(-1)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
+        <span>Previous</span>
       </button>
       
-      <button type="button" id="next-button" class="bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer" onclick="changePage(1)">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <button type="button" id="next-button" 
+        class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
+        onclick="changePage(1)">
+        <span>Next</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -105,12 +111,18 @@
       });
 
       // Update button states
-      document.getElementById('prev-button').disabled = currentPage === 0;
-      document.getElementById('next-button').disabled = end >= images.length;
+      const prevButton = document.getElementById('prev-button');
+      const nextButton = document.getElementById('next-button');
       
-      // Update button opacity for visual feedback
-      document.getElementById('prev-button').style.opacity = currentPage === 0 ? '0.5' : '1';
-      document.getElementById('next-button').style.opacity = end >= images.length ? '0.5' : '1';
+      prevButton.disabled = currentPage === 0;
+      nextButton.disabled = end >= images.length;
+      
+      // Update button styles for disabled state
+      prevButton.style.opacity = currentPage === 0 ? '0.3' : '1';
+      prevButton.style.cursor = currentPage === 0 ? 'default' : 'pointer';
+      
+      nextButton.style.opacity = end >= images.length ? '0.3' : '1';
+      nextButton.style.cursor = end >= images.length ? 'default' : 'pointer';
     }
 
     function changePage(direction) {

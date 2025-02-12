@@ -18,66 +18,86 @@
       href="{{ url_for('static', filename='styles.css') }}"
     />
     <style>
-      /* Additional styles for horizontal images */
-      .horizontal #location {
-        top: 6.4rem;
-        right: 34rem;
-        transform: none;
+      /* Base modal image styles */
+      #modalImage {
+        max-width: 90vw;
+        max-height: 80vh;
+        object-fit: contain;
+        border-radius: 8px;
       }
+
+      /* Base styles for location and description */
+      #location {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 60;
+      }
+
+      #description {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        text-align: center;
+        max-width: 80%;
+        z-index: 60;
+      }
+
+      /* Vertical image styles */
+      .vertical #location {
+        top: 1rem;
+        right: 1.2rem;
+      }
+
+      .vertical #description {
+        bottom: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* Horizontal image styles */
+      .horizontal #location {
+        top: 1rem;
+        right: 1rem;  /* Adjust this value to move left/right */
+      }
+
       .horizontal #description {
-        bottom: 6rem;
-        left: 58rem;
-        transform: none;
-        text-align: left;
+        bottom: 0.5rem;
+        left: 50%;    /* Adjust this value to move left/right */
+        transform: translateX(-50%);
       }
     </style>
-    <!-- Fullscreen Modal with Blur Effect -->
-    <div
-      id="imageModal"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50"
-    >
-      <!-- Close Button -->
-      <button
-        id="closeButton"
-        class="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-50 p-2 rounded-full hover:bg-opacity-80 transition-all"
-        onclick="closeModal()"
-      >
-        &times;
-      </button>
 
-      <!-- Modal Content (Image) -->
-      <img
-        id="modalImage"
-        class="w-[50rem] h-[58rem] border-4 border-gray-200 rounded-lg shadow-lg"
-      />
-      <!-- Location Section (Top Right with Icon) -->
-      <div
-        id="location"
-        class="absolute top-16 right-1/4 -translate-x-36 -translate-y-3 flex items-center space-x-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md hidden"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          class="h-6 w-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 2C8.13 2 5 5.13 5 9c0 3.22 3 6.8 7 12 4-5.2 7-8.78 7-12 0-3.87-3.13-7-7-7zm0 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"
-          />
-        </svg>
-        <p class="text-sm font-semibold"></p>
-      </div>
+    <!-- Update the modal structure -->
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
+      <div class="relative max-w-[90vw] max-h-[90vh]">
+        <!-- Close Button -->
+        <button id="closeButton" class="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300 transition-colors" onclick="closeModal()">
+          ×
+        </button>
 
-      <!-- Description Section (Bottom Center) -->
-      <div
-        id="description"
-        class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-3 rounded-md text-center hidden max-w-md"
-      >
-        <p class="text-sm"></p>
+        <!-- Modal Content (Image) -->
+        <div class="relative">
+          <img id="modalImage" src="" alt="Modal Image" />
+          
+          <!-- Location Section -->
+          <div id="location" class="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C7.802 0 4 3.403 4 7.602C4 11.8 7.469 16.812 12 24C16.531 16.812 20 11.8 20 7.602C20 3.403 16.199 0 12 0ZM12 11C10.343 11 9 9.657 9 8C9 6.343 10.343 5 12 5C13.657 5 15 6.343 15 8C15 9.657 13.657 11 12 11Z"/>
+            </svg>
+            <p class="text-sm font-semibold text-white"></p>
+          </div>
+
+          <!-- Description Section -->
+          <div id="description" class="hidden">
+            <p class="text-sm text-white"></p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -229,21 +249,14 @@
       const descriptionSection = document.getElementById("description");
       const imageModal = document.getElementById("imageModal");
 
-      // Ensure the image is loaded before accessing its natural width and height
-      modalImage.onload = () => {
-        const width = modalImage.naturalWidth;
-        const height = modalImage.naturalHeight;
-
-        if (width > height) {
-          // For horizontal image, increase width and height
-          modalImage.style.width = "60rem"; // Adjust width
-          modalImage.style.height = "50rem"; // Adjust height
-          imageModal.classList.add("horizontal");
+      modalImage.onload = function() {
+        // Check image orientation
+        if (this.naturalWidth > this.naturalHeight) {
+          imageModal.classList.add('horizontal');
+          imageModal.classList.remove('vertical');
         } else {
-          // For vertical image, keep original size
-          modalImage.style.width = "40rem";
-          modalImage.style.height = "50rem";
-          imageModal.classList.remove("horizontal");
+          imageModal.classList.add('vertical');
+          imageModal.classList.remove('horizontal');
         }
       };
     </script>
