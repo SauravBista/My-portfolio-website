@@ -4,13 +4,13 @@
 
 {% block content %}
   <section id="gallery" class="container mx-auto px-6 py-20">
-    <h2 class="font-extrabold text-7xl text-[#c8dfff] mb-12 text-center" data-aos="fade-up">
+    <h2 class="font-extrabold text-7xl text-[#03045E] mb-12 text-center" data-aos="fade-up">
       My Gallery
     </h2>
 
     <!-- Gallery Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {% for image in gallery %}
+    <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for image in gallery[:9] %}
       <div class="relative group">
         <img src="{{ image.src }}" alt="{{ image.alt }}" class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')" />
         
@@ -22,7 +22,22 @@
       </div>
       {% endfor %}
     </div>
+
+    <div class="flex justify-center mt-8 space-x-4">
+      <button type="button" id="prev-button" class="bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer" onclick="changePage(-1)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      
+      <button type="button" id="next-button" class="bg-black/20 hover:bg-black/40 w-12 h-12 rounded-full text-white hover:text-[#F5EE84] transition-all duration-300 z-30 flex items-center justify-center cursor-pointer" onclick="changePage(1)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
   </section>
+  
 
   <!-- Modal for Image View -->
   <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
@@ -33,9 +48,12 @@
       <!-- Modal Content (Image) -->
       <img id="modalImage" class="max-w-full max-h-[80vh] object-contain" />
 
-      <!-- Location Section (Top Right with Icon) -->
-      <div id="location" class="absolute top-4 right-4 flex items-center space-x-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md hidden">
-        <i class="fas fa-location-pin"></i>
+      <!-- Location Section (Bottom Left with Icon) -->
+      <div id="location" class="absolute bottom-4 left-8 flex items-center space-x-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
         <p class="text-sm font-semibold"></p>
       </div>
 
@@ -45,6 +63,7 @@
       </div>
     </div>
   </div>
+  
   
 {% endblock %}
 
@@ -57,6 +76,54 @@
       mirror: true,
       disable: "mobile",
     });
+
+    // Pagination Logic
+    let currentPage = 0;
+    const images = {{ gallery|tojson|safe }};
+    const imagesPerPage = 9;
+
+    function renderGallery() {
+      const galleryGrid = document.getElementById("gallery-grid");
+      const start = currentPage * imagesPerPage;
+      const end = start + imagesPerPage;
+      const paginatedImages = images.slice(start, end);
+      
+      galleryGrid.innerHTML = "";
+      
+      paginatedImages.forEach(image => {
+        const imageElement = `
+          <div class="relative group">
+            <img src="${image.src}" alt="${image.alt}" class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal('${image.src}', '${image.location}', '${image.description}')" />
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button onclick="openModal('${image.src}', '${image.location}', '${image.description}')" class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">
+                View Full Image
+              </button>
+            </div>
+          </div>
+        `;
+        galleryGrid.innerHTML += imageElement;
+      });
+
+      // Update button states
+      document.getElementById('prev-button').disabled = currentPage === 0;
+      document.getElementById('next-button').disabled = end >= images.length;
+      
+      // Update button opacity for visual feedback
+      document.getElementById('prev-button').style.opacity = currentPage === 0 ? '0.5' : '1';
+      document.getElementById('next-button').style.opacity = end >= images.length ? '0.5' : '1';
+    }
+
+    function changePage(direction) {
+      const newPage = currentPage + direction;
+      const totalPages = Math.ceil(images.length / imagesPerPage);
+      
+      if (newPage >= 0 && newPage < totalPages) {
+        currentPage = newPage;
+        renderGallery();
+        // Scroll to top of gallery section smoothly
+        document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
 
     // Open Modal Function
     function openModal(imageSrc, location, description) {
@@ -87,5 +154,8 @@
       document.getElementById("imageModal").classList.add("hidden"); // Hide modal
       document.getElementById("navbar").classList.remove("hidden"); // Show navbar again
     }
+
+    // Initialize gallery on page load
+    renderGallery();
   </script>
 {% endblock %}

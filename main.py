@@ -32,15 +32,24 @@ def gallery():
     }
 
     gallery_images = [
-        {"src": "/static/gallery-website/main1.JPG", "alt": "Gallery Image 1", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/main2.JPG", "alt": "Gallery Image 2", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/main3.jpg", "alt": "Gallery Image 3", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/image1.jpg", "alt": "Gallery Image 5", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
+        {"src": "/static/gallery-website/main1.JPG", "alt": "Gallery Image 1", "location": "Pumdikot, Pokhara", "description": "Shiva, the destroyer of the universe." },
+        {"src": "/static/gallery-website/main2.JPG", "alt": "Gallery Image 2", "location": "Lete Mustang", "description": "Annapurna I, 8077M" },
+        {"src": "/static/gallery-website/main3.jpg", "alt": "Gallery Image 3", "location": "Na Village, Rolwaling Valley", "description": "Will snow in about 10 minutes" },
+        {"src": "/static/gallery-website/main4.jpg", "alt": "Gallery Image 4", "location": "Na Village, Rolwaling Valley", "description": "Ma ta Nepali Babu, Made in Nepal" },
+        {"src": "/static/gallery-website/image1.jpg", "alt": "Gallery Image 5", "location": ", Muktinath", "description": "A beautiful view of the Eiffel Tower." },
         {"src": "/static/gallery-website/image2.jpg", "alt": "Gallery Image 6", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/image3.jpg", "alt": "Gallery Image 7", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
-        {"src": "/static/gallery-website/image4.jpg", "alt": "Gallery Image 8", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
+        {"src": "/static/gallery-website/image3.jpg", "alt": "Gallery Image 7", "location": "Sailung, Dolakha", "description": "Majestic sunrise from Sailung." },
+        {"src": "/static/gallery-website/image4.jpg", "alt": "Gallery Image 8", "location": "Marpha, Mustang", "description": "Riding my way to Liberation" },
         {"src": "/static/gallery-website/image5.jpg", "alt": "Gallery Image 9", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
+        {"src": "/static/gallery-website/image6.JPG", "alt": "Gallery Image 1", "location": "Pumdikot, Pokhara", "description": "Shiva, the destroyer of the universe." },
+        {"src": "/static/gallery-website/image7.JPG", "alt": "Gallery Image 2", "location": "Lete Mustang", "description": "Annapurna I, 8077M" },
+        {"src": "/static/gallery-website/image15.jpg", "alt": "Gallery Image 3", "location": "Na Village, Rolwaling Valley", "description": "Will snow in about 10 minutes" },
+        {"src": "/static/gallery-website/image9.jpg", "alt": "Gallery Image 4", "location": "Na Village, Rolwaling Valley", "description": "Ma ta Nepali Babu, Made in Nepal" },
+        {"src": "/static/gallery-website/image10.jpg", "alt": "Gallery Image 5", "location": ", Muktinath", "description": "A beautiful view of the Eiffel Tower." },
+        {"src": "/static/gallery-website/image11.jpg", "alt": "Gallery Image 6", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
+        {"src": "/static/gallery-website/image12.jpg", "alt": "Gallery Image 7", "location": "Sailung, Dolakha", "description": "Majestic sunrise from Sailung." },
+        {"src": "/static/gallery-website/image13.jpg", "alt": "Gallery Image 8", "location": "Marpha, Mustang", "description": "Riding my way to Liberation" },
+        {"src": "/static/gallery-website/image14.jpg", "alt": "Gallery Image 9", "location": "Paris, France", "description": "A beautiful view of the Eiffel Tower." },
        
 
     ]

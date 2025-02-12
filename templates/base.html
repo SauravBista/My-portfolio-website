@@ -159,7 +159,7 @@
     <div class="pt-24">{% block content %}{% endblock %}</div>
 
     <!-- Footer -->
-    <footer class="bg-[#03045E] text-[#FBF8CC] py-12 mt-20">
+    <footer class="bg-[#03045E] text-[#FBF8CC] py-4 mt-20]">
       <div
         class="relative container mx-auto flex justify-between items-center px-16"
       >
@@ -196,7 +196,7 @@
         <p>&copy; 2025 {{ profile.name }}. All rights reserved.</p>
       </div>
       <div
-        class="text-center mt-2 text-sm relative container mx-auto flex justify-center items-center px-16"
+        class="text-center mt-2 text-sm relative container mx-auto flex justify-center items-center px-20"
       >
         <img
           src="/static/img/om-footer.png"
@@ -236,13 +236,13 @@
 
         if (width > height) {
           // For horizontal image, increase width and height
-          modalImage.style.width = "65rem"; // Adjust width
-          modalImage.style.height = "55rem"; // Adjust height
+          modalImage.style.width = "60rem"; // Adjust width
+          modalImage.style.height = "50rem"; // Adjust height
           imageModal.classList.add("horizontal");
         } else {
           // For vertical image, keep original size
-          modalImage.style.width = "50rem";
-          modalImage.style.height = "62rem";
+          modalImage.style.width = "40rem";
+          modalImage.style.height = "50rem";
           imageModal.classList.remove("horizontal");
         }
       };
