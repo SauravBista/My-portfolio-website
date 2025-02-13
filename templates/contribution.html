@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contribute | {{ profile.name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Ensure form fields don't overflow */
+      input, textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: none;
+      }
+    </style>
+  </head>
+
+  <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full top-0 bg-[#FBF8CC] shadow-sm z-50">
+      <div class="relative container mx-auto px-6 py-4">
+        <img
+          src="/static/img/om.png"
+          alt="Left Image"
+          class="absolute left-[-80px] h-12"
+        />
+        <img
+          src="/static/img/om.png"
+          alt="Right Image"
+          class="absolute right-[-80px] h-12"
+        />
+        <div class="flex justify-between items-center">
+          <h1 class="text-4xl font-semibold">
+            <a href="/"> {{ profile.name }}</a>
+          </h1>
+          <div class="flex space-x-12">
+            <a href="{{ url_for('home') }}#home" class="nav-link font-normal text-lg">Home</a>
+            <a href="{{ url_for('home') }}#about" class="nav-link font-normal text-lg">About</a>
+            <a href="{{ url_for('home') }}#works" class="nav-link font-normal text-lg">Works</a>
+            <a href="{{ url_for('home') }}#skills" class="nav-link font-normal text-lg">Skills</a>
+            <a href="{{ url_for('gallery') }}" class="nav-link font-normal text-lg">Gallery</a>
+          </div>
+          <div class="flex space-x-8 text-2xl">
+            <a
+              href="{{ profile.linkedin }}"
+              target="_blank"
+              class="transition-colors duration-300 hover:text-[#0077b5]"
+            >
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a
+              href="mailto:{{ profile.email }}"
+              class="transition-colors duration-300 hover:text-[#d44638]"
+            >
+              <i class="fas fa-envelope"></i>
+            </a>
+            <a
+              href="{{ profile.instagram }}"
+              target="_blank"
+              class="transition-colors duration-300 hover:text-[#e1306c]"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24">
+      <section class="container mx-auto px-6 py-20">
+        <h2 class="font-extrabold text-7xl text-[#03045E] mb-12 text-center" data-aos="fade-up">
+          Contribute Photos
+        </h2>
+
+        <div class="max-w-4xl mx-auto bg-[#FFFDF6] p-8 rounded-lg shadow-lg">
+          <h1 class="text-3xl font-semibold mb-6 text-[#03045E]">Contribute Your Image</h1>
+          
+          <!-- Image upload form -->
+          <form action="/contribution" method="POST" enctype="multipart/form-data">
+              <div class="mb-4">
+                  <label for="image" class="block text-lg font-medium text-[#2C3E50]">Upload an Image</label>
+                  <input type="file" name="image" id="image" accept="image/*" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-[#FFFFFF ]" required>
+                  <small class="text-gray-600">Max size: 10MB</small>
+              </div>
+              <div class="mb-4">
+                  <label for="location" class="block text-lg font-medium text-[#2C3E50]">Location</label>
+                  <input type="text" name="location" id="location" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-white" required>
+              </div>
+              <div class="mb-6">
+                  <label for="description" class="block text-lg font-medium text-[#2C3E50 ]">Description</label>
+                  <textarea name="description" id="description" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full h-32 resize-none bg-[#FFFFFF] text-gray-600 placeholder-white" required placeholder="Describe your image..."></textarea>
+              </div>
+              <div>
+                  <button type="submit" class="bg-white border-2 font-semibold border-blue-600 hover:bg-blue-600 hover:scale-105 text-blue-600 hover:text-white px-6 py-3 rounded-md font-semibold transition-transform duration-200">
+                      Submit
+                  </button>
+              </div>
+          </form>
+        </div>
+
+        <!-- Contributed Photos Section -->
+        <div class="mt-20">
+          <h3 class="font-bold text-4xl text-[#03045E] mb-8 text-center" data-aos="fade-up">
+            Recent Contributions
+          </h3>
+
+          <!-- Gallery Grid -->
+          <div id="contributed-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for image in contributed_images[:9] %}
+            <div class="relative group">
+              <img src="{{ image.src }}" alt="{{ image.alt }}" 
+                   class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer"
+                   onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')" />
+              <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <button onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
+                        class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">
+                  View Full Image
+                </button>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex justify-center mt-8 space-x-6 items-center">
+            <button type="button" id="prev-button" 
+              class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
+              onclick="changePage(-1)">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span>Previous</span>
+            </button>
+            
+            <button type="button" id="next-button" 
+              class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
+              onclick="changePage(1)">
+              <span>Next</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#03045E] text-[#FBF8CC] py-4 mt-20">
+      <div class="relative container mx-auto flex justify-between items-center px-16">
+        <div class="flex flex-col">
+          <p class="font-semibold text-lg">{{ profile.name }}</p>
+          <p class="text-sm mt-2">
+            {{ profile.title }} | Tech Enthusiast | Storyteller
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 justify-center items-center" onclick="closeModal()">
+      <div class="relative max-w-4xl mx-auto p-8 bg-white rounded-lg">
+        <span onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl cursor-pointer">&times;</span>
+        <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg shadow-lg mb-4" />
+        <h2 id="modal-location" class="font-bold text-xl text-[#03045E] mb-2"></h2>
+        <p id="modal-description" class="text-[#555555]"></p>
+      </div>
+    </div>
+
+    <script>
+      let currentPage = 1;
+      const imagesPerPage = 9;
+      const allImages = {{ contributed_images|tojson }};
+      const totalImages = allImages.length;
+
+      function changePage(direction) {
+        const totalPages = Math.ceil(totalImages / imagesPerPage);
+        currentPage += direction;
+
+        if (currentPage < 1) {
+          currentPage = 1;
+        } else if (currentPage > totalPages) {
+          currentPage = totalPages;
+        }
+
+        updateGallery();
+      }
+
+      function updateGallery() {
+        const start = (currentPage - 1) * imagesPerPage;
+        const end = start + imagesPerPage;
+
+        const imagesToDisplay = allImages.slice(start, end);
+        const galleryContainer = document.getElementById('contributed-gallery');
+        galleryContainer.innerHTML = '';
+
+        imagesToDisplay.forEach(image => {
+          const imageElement = document.createElement('div');
+          imageElement.classList.add('relative', 'group');
+          imageElement.innerHTML = `
+            <img src="${image.src}" alt="${image.alt}" class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal('${image.src}', '${image.location}', '${image.description}')">
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button onclick="openModal('${image.src}', '${image.location}', '${image.description}')" class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">View Full Image</button>
+            </div>
+          `;
+          galleryContainer.appendChild(imageElement);
+        });
+      }
+
+      function openModal(src, location, description) {
+        document.getElementById('modal-image').src = src;
+        document.getElementById('modal-location').innerText = location;
+        document.getElementById('modal-description').innerText = description;
+        document.getElementById('image-modal').classList.remove('hidden');
+      }
+
+      function closeModal() {
+        document.getElementById('image-modal').classList.add('hidden');
+      }
+
+      updateGallery();
+    </script>
+  </body>
+</html>

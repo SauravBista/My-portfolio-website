@@ -43,7 +43,14 @@
       </button>
     </div>
   </section>
+    <!-- Contribution button -->
+    <div class="flex justify-center mt-8">
+      <a href="/contribution" class="px-6 py-3 bg-[#03045E] text-white rounded-md text-lg font-semibold transform hover:bg-[#0077B6] transition-all duration-300 mb-8">
+        Contribute to Gallery
+      </a>
+    </div>
   
+
 
   <!-- Modal for Image View -->
   <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
@@ -136,7 +143,7 @@
         document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
       }
     }
-
+  
     // Open Modal Function
     function openModal(imageSrc, location, description) {
       const modalImage = document.getElementById("modalImage");
@@ -144,6 +151,7 @@
       const locationElement = document.getElementById("location");
       const descriptionElement = document.getElementById("description");
       const navbar = document.getElementById("navbar");
+      modalImage.classList.add("border-4", "border-[#BOBOBO]");
 
       // Set image source
       modalImage.src = imageSrc;

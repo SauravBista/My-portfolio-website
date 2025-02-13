@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, request, redirect, url_for, flash
+import os
 app = Flask(__name__)
 
 # Sample blog posts (you can uncomment this if you want to use it later)
@@ -7,7 +7,13 @@ app = Flask(__name__)
 #     {"title": "My First Blog Post", "date": "2024-01-31", "content": "This is my first blog post content."},
 #     {"title": "Exploring the Himalayas", "date": "2024-02-15", "content": "A journey through the Himalayas and what I learned."}
 # ]
-
+profile = {
+            "name": "Saurav Bista",
+            "title": "Tech Enthusiast | StoryTeller",
+            "linkedin": "https://www.linkedin.com/in/sauravbista",
+            "email": "saurav@example.com",
+            "instagram": "https://www.instagram.com/sauravbista",
+        }
 @app.route('/')
 def home():
     profile = {
@@ -23,13 +29,6 @@ def home():
 @app.route('/gallery')
 def gallery():
     
-    profile = {
-        "name": "Saurav Bista",
-        "title": "Tech Enthusiast | StoryTeller",
-        "linkedin": "https://www.linkedin.com/in/sauravbista",
-        "email": "saurav@example.com",
-        "instagram": "https://www.instagram.com/sauravbista",
-    }
 
     gallery_images = [
         {"src": "/static/gallery-website/main1.JPG", "alt": "Gallery Image 1", "location": "Pumdikot, Pokhara", "description": "Shiva, the destroyer of the universe." },
@@ -58,15 +57,57 @@ def gallery():
 
 @app.route('/base')
 def base():
-
-    profile = {
-            "name": "Saurav Bista",
-            "title": "Tech Enthusiast | StoryTeller",
-            "linkedin": "https://www.linkedin.com/in/sauravbista",
-            "email": "saurav@example.com",
-            "instagram": "https://www.instagram.com/sauravbista",
-        }
     return render_template("base.html", profile=profile)
+
+app.secret_key = 'your_secret_key'
+
+# Upload folder for images
+UPLOAD_FOLDER = 'static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10MB size limit
+
+# Ensure the upload folder exists
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+
+
+# Helper function to check file extensions
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/contribution', methods=['GET', 'POST'])
+def contribution():
+    contributed_images = []  # Initialize the list to store image filenames
+
+    # Get all image files from the upload folder (assuming images are stored there)
+    upload_folder = app.config['UPLOAD_FOLDER']
+    if os.path.exists(upload_folder):
+        contributed_images = [f for f in os.listdir(upload_folder) if allowed_file(f)]  # List all valid image files
+    
+    if request.method == 'POST':
+        # Get the image, location, and description from the form
+        image = request.files['image']
+        location = request.form['location']
+        description = request.form['description']
+
+        # Check if the file is allowed
+        if image and allowed_file(image.filename):
+            # Save the image to the uploads folder
+            image_filename = os.path.join(upload_folder, image.filename)
+            image.save(image_filename)
+
+            # Store image filename for display
+            contributed_images.append(image.filename)
+
+            flash('Your image has been successfully uploaded!', 'success')
+            return redirect(url_for('contribution'))
+        else:
+            flash('Please upload a valid image file (JPG, PNG, GIF).', 'danger')
+
+    return render_template('contribution.html', profile=profile, contributed_images=contributed_images)
 
 
 if __name__ == '__main__':
