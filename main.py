@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import os
+import json
+from datetime import datetime
 app = Flask(__name__)
 
 # Sample blog posts (you can uncomment this if you want to use it later)
@@ -25,6 +27,17 @@ def home():
         }
     return render_template('index.html', profile=profile)  # Renders the index page
 
+METADATA_FILE = 'static/uploads/metadata.json'
+
+def load_metadata():
+    if os.path.exists(METADATA_FILE):
+        with open(METADATA_FILE, 'r') as f:
+            return json.load(f)
+    return []
+
+def save_metadata(metadata):
+    with open(METADATA_FILE, 'w') as f:
+        json.dump(metadata, f)
 
 @app.route('/gallery')
 def gallery():
@@ -77,30 +90,37 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
 @app.route('/contribution', methods=['GET', 'POST'])
 def contribution():
-    contributed_images = []  # Initialize the list to store image filenames
+    # Load existing metadata
+    contributed_images = load_metadata()
 
-    # Get all image files from the upload folder (assuming images are stored there)
-    upload_folder = app.config['UPLOAD_FOLDER']
-    if os.path.exists(upload_folder):
-        contributed_images = [f for f in os.listdir(upload_folder) if allowed_file(f)]  # List all valid image files
-    
     if request.method == 'POST':
-        # Get the image, location, and description from the form
         image = request.files['image']
         location = request.form['location']
         description = request.form['description']
 
-        # Check if the file is allowed
         if image and allowed_file(image.filename):
-            # Save the image to the uploads folder
-            image_filename = os.path.join(upload_folder, image.filename)
-            image.save(image_filename)
+            # Generate unique filename
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S_')
+            secure_filename = timestamp + image.filename
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename)
+            
+            # Save the image
+            image.save(image_path)
 
-            # Store image filename for display
-            contributed_images.append(image.filename)
+            # Create metadata entry
+            new_image = {
+                "src": f"/static/uploads/{secure_filename}",
+                "alt": f"Uploaded Image - {location}",
+                "location": location,
+                "description": description,
+                "timestamp": datetime.now().isoformat()
+            }
+
+            # Add to metadata and save
+            contributed_images.append(new_image)
+            save_metadata(contributed_images)
 
             flash('Your image has been successfully uploaded!', 'success')
             return redirect(url_for('contribution'))
@@ -108,7 +128,5 @@ def contribution():
             flash('Please upload a valid image file (JPG, PNG, GIF).', 'danger')
 
     return render_template('contribution.html', profile=profile, contributed_images=contributed_images)
-
-
 if __name__ == '__main__':
     app.run(debug=True)

@@ -15,12 +15,19 @@
     />
     <style>
       /* Ensure form fields don't overflow */
-      input, textarea {
+      input,
+      textarea {
         max-width: 100%;
         box-sizing: border-box;
       }
       textarea {
         resize: none;
+      }
+
+      /* Ensure the button is clickable */
+      button {
+        pointer-events: auto;
+        z-index: 10;
       }
     </style>
   </head>
@@ -83,29 +90,50 @@
           Contribute Photos
         </h2>
 
+        <!-- Image Upload Form -->
         <div class="max-w-4xl mx-auto bg-[#FFFDF6] p-8 rounded-lg shadow-lg">
           <h1 class="text-3xl font-semibold mb-6 text-[#03045E]">Contribute Your Image</h1>
-          
-          <!-- Image upload form -->
           <form action="/contribution" method="POST" enctype="multipart/form-data">
-              <div class="mb-4">
-                  <label for="image" class="block text-lg font-medium text-[#2C3E50]">Upload an Image</label>
-                  <input type="file" name="image" id="image" accept="image/*" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-[#FFFFFF ]" required>
-                  <small class="text-gray-600">Max size: 10MB</small>
-              </div>
-              <div class="mb-4">
-                  <label for="location" class="block text-lg font-medium text-[#2C3E50]">Location</label>
-                  <input type="text" name="location" id="location" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-white" required>
-              </div>
-              <div class="mb-6">
-                  <label for="description" class="block text-lg font-medium text-[#2C3E50 ]">Description</label>
-                  <textarea name="description" id="description" class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full h-32 resize-none bg-[#FFFFFF] text-gray-600 placeholder-white" required placeholder="Describe your image..."></textarea>
-              </div>
-              <div>
-                  <button type="submit" class="bg-white border-2 font-semibold border-blue-600 hover:bg-blue-600 hover:scale-105 text-blue-600 hover:text-white px-6 py-3 rounded-md font-semibold transition-transform duration-200">
-                      Submit
-                  </button>
-              </div>
+            <div class="mb-4">
+              <label for="image" class="block text-lg font-medium text-[#2C3E50]">Upload an Image</label>
+              <input
+                type="file"
+                name="image"
+                id="image"
+                accept="image/*"
+                class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-[#FFFFFF]"
+                required
+              />
+              <small class="text-gray-600">Max size: 10MB</small>
+            </div>
+            <div class="mb-4">
+              <label for="location" class="block text-lg font-medium text-[#2C3E50]">Location</label>
+              <input
+                type="text"
+                name="location"
+                id="location"
+                class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-white"
+                required
+              />
+            </div>
+            <div class="mb-6">
+              <label for="description" class="block text-lg font-medium text-[#2C3E50]">Description</label>
+              <textarea
+                name="description"
+                id="description"
+                class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full h-32 resize-none bg-[#FFFFFF] text-gray-600 placeholder-white"
+                required
+                placeholder="Describe your image..."
+              ></textarea>
+            </div>
+            <div>
+              <button
+                type="submit"
+                class="bg-white border-2 font-semibold border-blue-600 hover:bg-blue-600 hover:scale-105 text-blue-600 hover:text-white px-6 py-3 rounded-md font-semibold transition-transform duration-200"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
 
@@ -114,43 +142,28 @@
           <h3 class="font-bold text-4xl text-[#03045E] mb-8 text-center" data-aos="fade-up">
             Recent Contributions
           </h3>
-
           <!-- Gallery Grid -->
           <div id="contributed-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for image in contributed_images[:9] %}
+            {% for image in contributed_images %}
             <div class="relative group">
-              <img src="{{ image.src }}" alt="{{ image.alt }}" 
-                   class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer"
-                   onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')" />
-              <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
-                        class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">
+              <img
+                src="{{ image.src }}"
+                alt="{{ image.alt }}"
+                class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer"
+                onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
+              />
+              <div
+                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <button
+                  onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
+                  class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300"
+                >
                   View Full Image
                 </button>
               </div>
             </div>
             {% endfor %}
-          </div>
-
-          <!-- Pagination -->
-          <div class="flex justify-center mt-8 space-x-6 items-center">
-            <button type="button" id="prev-button" 
-              class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
-              onclick="changePage(-1)">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              <span>Previous</span>
-            </button>
-            
-            <button type="button" id="next-button" 
-              class="text-[#03045E] hover:text-[#0077B6] transition-colors duration-300 flex items-center space-x-2" 
-              onclick="changePage(1)">
-              <span>Next</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
           </div>
         </div>
       </section>
@@ -168,68 +181,122 @@
       </div>
     </footer>
 
-    <!-- Image Modal -->
-    <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 justify-center items-center" onclick="closeModal()">
-      <div class="relative max-w-4xl mx-auto p-8 bg-white rounded-lg">
-        <span onclick="closeModal()" class="absolute top-2 right-2 text-white text-3xl cursor-pointer">&times;</span>
-        <img id="modal-image" src="" alt="" class="w-full h-auto rounded-lg shadow-lg mb-4" />
-        <h2 id="modal-location" class="font-bold text-xl text-[#03045E] mb-2"></h2>
-        <p id="modal-description" class="text-[#555555]"></p>
-      </div>
+    <!-- Modal for Image View -->
+    <!-- Modal for Image View -->
+<!-- Modal for Image View -->
+<div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
+  <div class="relative w-11/12 h-[90vh] max-w-6xl bg-white rounded-lg p-4 flex flex-col">
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center bg-white z-10">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
     </div>
 
-    <script>
-      let currentPage = 1;
-      const imagesPerPage = 9;
-      const allImages = {{ contributed_images|tojson }};
-      const totalImages = allImages.length;
+    <!-- Close Button -->
+    <button
+      onclick="closeModal()"
+      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 z-50 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
 
-      function changePage(direction) {
-        const totalPages = Math.ceil(totalImages / imagesPerPage);
-        currentPage += direction;
+    <!-- Image Container -->
+    <div class="flex-1 relative overflow-hidden bg-black">
+      <img 
+        id="modalImage" 
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full object-contain opacity-0 transition-opacity duration-300"
+        alt="Modal image"
+      />
+    </div>
 
-        if (currentPage < 1) {
-          currentPage = 1;
-        } else if (currentPage > totalPages) {
-          currentPage = totalPages;
-        }
+    <!-- Info Bar -->
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
+      <div class="max-w-6xl mx-auto flex items-start justify-between gap-4">
+        <!-- Location -->
+        <div class="flex items-center space-x-2 min-w-fit">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <p id="modalLocation" class="font-medium"></p>
+        </div>
+        
+        <!-- Description -->
+        <p id="modalDescription" class="flex-1 text-sm max-w-2xl"></p>
+      </div>
+    </div>
+  </div>
+</div>
 
-        updateGallery();
-      }
+<script>
+function openModal(src, location, description) {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const modalLocation = document.getElementById('modalLocation');
+  const modalDescription = document.getElementById('modalDescription');
+  const loadingSpinner = document.getElementById('loadingSpinner');
+  const navbar = document.getElementById('navbar');
 
-      function updateGallery() {
-        const start = (currentPage - 1) * imagesPerPage;
-        const end = start + imagesPerPage;
+  // Show modal and loading state
+  modal.classList.remove('hidden');
+  loadingSpinner.classList.remove('hidden');
+  modalImage.classList.add('opacity-0');
+  navbar.classList.add('hidden');
+  document.body.style.overflow = 'hidden';
+  modalImage.classList.add("border-4", "border-[#BOBOBO]");
+  // Set content
+  modalLocation.textContent = location;
+  modalDescription.textContent = description;
 
-        const imagesToDisplay = allImages.slice(start, end);
-        const galleryContainer = document.getElementById('contributed-gallery');
-        galleryContainer.innerHTML = '';
+  // Load image
+  const img = new Image();
+  img.onload = function() {
+    modalImage.src = src;
+    loadingSpinner.classList.add('hidden');
+    modalImage.classList.remove('opacity-0');
+    
+    // Adjust classes based on orientation
+    if (this.width > this.height) {
+      modalImage.classList.add('w-full');
+      modalImage.classList.remove('h-full');
+    } else {
+      modalImage.classList.add('h-full');
+      modalImage.classList.remove('w-full');
+    }
+  };
+  img.onerror = function() {
+    loadingSpinner.classList.add('hidden');
+    modalImage.src = '/static/img/error-placeholder.jpg'; // Add a placeholder error image
+    modalImage.classList.remove('opacity-0');
+  };
+  img.src = src;
+}
 
-        imagesToDisplay.forEach(image => {
-          const imageElement = document.createElement('div');
-          imageElement.classList.add('relative', 'group');
-          imageElement.innerHTML = `
-            <img src="${image.src}" alt="${image.alt}" class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer" onclick="openModal('${image.src}', '${image.location}', '${image.description}')">
-            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button onclick="openModal('${image.src}', '${image.location}', '${image.description}')" class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300">View Full Image</button>
-            </div>
-          `;
-          galleryContainer.appendChild(imageElement);
-        });
-      }
+function closeModal() {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  const navbar = document.getElementById('navbar');
+  
+  modal.classList.add('hidden');
+  modalImage.src = ''; // Clear the image source
+  navbar.classList.remove('hidden');
+  document.body.style.overflow = '';
+}
 
-      function openModal(src, location, description) {
-        document.getElementById('modal-image').src = src;
-        document.getElementById('modal-location').innerText = location;
-        document.getElementById('modal-description').innerText = description;
-        document.getElementById('image-modal').classList.remove('hidden');
-      }
+// Close on backdrop click
+document.getElementById('imageModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('imageModal')) {
+    closeModal();
+  }
+});
 
-      function closeModal() {
-        document.getElementById('image-modal').classList.add('hidden');
-      }
-
-      updateGallery();
-    </script>
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+</script>
   </body>
 </html>
