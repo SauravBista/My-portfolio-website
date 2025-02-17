@@ -33,7 +33,6 @@
   </head>
 
   <body class="bg-[#FBF8CC] text-[#03045E] font-sans">
-    <!-- Navbar -->
     <nav id="navbar" class="fixed w-full top-0 bg-[#FBF8CC] shadow-sm z-50">
       <div class="relative container mx-auto px-6 py-4">
         <img
@@ -95,6 +94,16 @@
           <h1 class="text-3xl font-semibold mb-6 text-[#03045E]">Contribute Your Image</h1>
           <form action="/contribution" method="POST" enctype="multipart/form-data">
             <div class="mb-4">
+              <label for="contributor" class="block text-lg font-medium text-[#2C3E50]">Your Name</label>
+              <input
+                type="text"
+                name="contributor"
+                id="contributor"
+                class="mt-2 p-2 border border-[#E0E0E0] rounded-lg w-full bg-white"
+                required
+              />
+            </div>
+            <div class="mb-4">
               <label for="image" class="block text-lg font-medium text-[#2C3E50]">Upload an Image</label>
               <input
                 type="file"
@@ -150,13 +159,13 @@
                 src="{{ image.src }}"
                 alt="{{ image.alt }}"
                 class="w-full h-80 object-cover rounded-lg shadow-lg transform transition duration-300 group-hover:scale-105 cursor-pointer"
-                onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
+                onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}', '{{ image.contributor }}')"
               />
               <div
                 class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               >
                 <button
-                  onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}')"
+                  onclick="openModal('{{ image.src }}', '{{ image.location }}', '{{ image.description }}', '{{ image.contributor }}')"
                   class="px-6 py-3 bg-transparent text-white border-2 border-white rounded-md text-lg font-semibold transform hover:bg-white hover:text-[#03045E] transition-all duration-300"
                 >
                   View Full Image
@@ -169,7 +178,6 @@
       </section>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-[#03045E] text-[#FBF8CC] py-4 mt-20">
       <div class="relative container mx-auto flex justify-between items-center px-16">
         <div class="flex flex-col">
@@ -182,121 +190,132 @@
     </footer>
 
     <!-- Modal for Image View -->
-    <!-- Modal for Image View -->
-<!-- Modal for Image View -->
-<div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
-  <div class="relative w-11/12 h-[90vh] max-w-6xl bg-white rounded-lg p-4 flex flex-col">
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="absolute inset-0 flex items-center justify-center bg-white z-10">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-    </div>
-
+    <div id="imageModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 backdrop-blur-md hidden z-50">
+  <div class="relative max-w-[90vw] max-h-[90vh]">
     <!-- Close Button -->
     <button
       onclick="closeModal()"
-      class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 z-50 w-8 h-8 flex items-center justify-center bg-white rounded-full shadow-lg"
+      class="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300 transition-colors"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
+      ×
     </button>
-
+    
     <!-- Image Container -->
-    <div class="flex-1 relative overflow-hidden bg-black">
-      <img 
-        id="modalImage" 
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full object-contain opacity-0 transition-opacity duration-300"
-        alt="Modal image"
-      />
+    <img 
+      id="modalImage" 
+      class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-lg border-4 border-[#B0B0B0]"
+      alt="Modal image"
+    />
+    
+    <!-- Location - Top Right -->
+    <div id="modalLocation" class="absolute top-4 right bg-black bg-opacity-50 text-white px-4 py-2 rounded-md flex items-center space-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      <span class="text-sm font-semibold"></span>
     </div>
-
-    <!-- Info Bar -->
-    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white">
-      <div class="max-w-6xl mx-auto flex items-start justify-between gap-4">
-        <!-- Location -->
-        <div class="flex items-center space-x-2 min-w-fit">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <p id="modalLocation" class="font-medium"></p>
-        </div>
-        
-        <!-- Description -->
-        <p id="modalDescription" class="flex-1 text-sm max-w-2xl"></p>
-      </div>
+    
+    <!-- Contributor Name - Bottom Left -->
+    <div id="modalContributor" class="absolute bottom left-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-md">
+      <p class="text-sm font-medium"></p>
+    </div>
+    
+    <!-- Description - Bottom Center -->
+    <div id="modalDescription" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-6 py-3 rounded-md text-center max-w-[90%]">
+      <p class="text-sm"></p>
     </div>
   </div>
 </div>
+    <!-- JavaScript -->
+    <script>
+      function openModal(src, location, description, contributor) {
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalContributor = document.getElementById('modalContributor');
+        const navbar = document.getElementById('navbar');
 
-<script>
-function openModal(src, location, description) {
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.getElementById('modalImage');
-  const modalLocation = document.getElementById('modalLocation');
-  const modalDescription = document.getElementById('modalDescription');
-  const loadingSpinner = document.getElementById('loadingSpinner');
-  const navbar = document.getElementById('navbar');
+        // Show modal
+        modal.classList.remove('hidden');
+        navbar.style.display = 'none';
+        document.body.style.overflow = 'hidden';
 
-  // Show modal and loading state
-  modal.classList.remove('hidden');
-  loadingSpinner.classList.remove('hidden');
-  modalImage.classList.add('opacity-0');
-  navbar.classList.add('hidden');
-  document.body.style.overflow = 'hidden';
-  modalImage.classList.add("border-4", "border-[#BOBOBO]");
-  // Set content
-  modalLocation.textContent = location;
-  modalDescription.textContent = description;
+        // Set image
+        modalImage.src = src;
 
-  // Load image
-  const img = new Image();
-  img.onload = function() {
-    modalImage.src = src;
-    loadingSpinner.classList.add('hidden');
-    modalImage.classList.remove('opacity-0');
-    
-    // Adjust classes based on orientation
-    if (this.width > this.height) {
-      modalImage.classList.add('w-full');
-      modalImage.classList.remove('h-full');
-    } else {
-      modalImage.classList.add('h-full');
-      modalImage.classList.remove('w-full');
-    }
-  };
-  img.onerror = function() {
-    loadingSpinner.classList.add('hidden');
-    modalImage.src = '/static/img/error-placeholder.jpg'; // Add a placeholder error image
-    modalImage.classList.remove('opacity-0');
-  };
-  img.src = src;
-}
+        // Handle location
+        if (location && location.trim() !== '') {
+          modalLocation.classList.remove('hidden');
+          modalLocation.querySelector('span').textContent = location;
+        } else {
+          modalLocation.classList.add('hidden');
+        }
 
-function closeModal() {
-  const modal = document.getElementById('imageModal');
-  const modalImage = document.getElementById('modalImage');
-  const navbar = document.getElementById('navbar');
-  
-  modal.classList.add('hidden');
-  modalImage.src = ''; // Clear the image source
-  navbar.classList.remove('hidden');
-  document.body.style.overflow = '';
-}
+        // Handle description
+        if (description && description.trim() !== '') {
+          modalDescription.classList.remove('hidden');
+          modalDescription.querySelector('p').textContent = description;
+        } else {
+          modalDescription.classList.add('hidden');
+        }
 
-// Close on backdrop click
-document.getElementById('imageModal').addEventListener('click', (e) => {
-  if (e.target === document.getElementById('imageModal')) {
-    closeModal();
-  }
-});
+        // Handle contributor
+        if (contributor && contributor.trim() !== '') {
+          modalContributor.classList.remove('hidden');
+          modalContributor.querySelector('p').textContent = `Contributed by: ${contributor}`;
+        } else {
+          modalContributor.classList.add('hidden');
+        }
 
-// Close on escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeModal();
-  }
-});
-</script>
+        // Add loading state
+        modalImage.style.opacity = '0';
+        modalImage.onload = function() {
+          modalImage.style.opacity = '1';
+          
+          // Position location tag after image loads
+          if (location && location.trim() !== '') {
+            modalLocation.style.right = `-${modalLocation.offsetWidth + 20}px`;
+          }
+        };
+      }
+
+      function closeModal() {
+        const modal = document.getElementById('imageModal');
+        const navbar = document.getElementById('navbar');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalContributor = document.getElementById('modalContributor');
+        
+        modal.classList.add('hidden');
+        navbar.style.display = 'block';
+        document.body.style.overflow = '';
+        
+        // Reset content
+        modalLocation.classList.add('hidden');
+        modalDescription.classList.add('hidden');
+        modalContributor.classList.add('hidden');
+      }
+
+      // Close modal when clicking outside
+      document.getElementById('imageModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('imageModal')) {
+          closeModal();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        }
+      });
+
+      // Prevent modal close when clicking inside modal content
+      document.querySelector('#imageModal > div').addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    </script>
   </body>
 </html>

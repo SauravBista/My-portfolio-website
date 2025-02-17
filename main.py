@@ -18,13 +18,6 @@ profile = {
         }
 @app.route('/')
 def home():
-    profile = {
-            "name": "Saurav Bista",
-            "title": "Tech Enthusiast | StoryTeller",
-            "linkedin": "https://www.linkedin.com/in/sauravbista",
-            "email": "saurav@example.com",
-            "instagram": "https://www.instagram.com/sauravbista",
-        }
     return render_template('index.html', profile=profile)  # Renders the index page
 
 METADATA_FILE = 'static/uploads/metadata.json'
@@ -99,6 +92,7 @@ def contribution():
         image = request.files['image']
         location = request.form['location']
         description = request.form['description']
+        contributor = request.form['contributor']  # Get contributor name from the form
 
         if image and allowed_file(image.filename):
             # Generate unique filename
@@ -115,6 +109,7 @@ def contribution():
                 "alt": f"Uploaded Image - {location}",
                 "location": location,
                 "description": description,
+                "contributor": contributor,  # Store contributor name
                 "timestamp": datetime.now().isoformat()
             }
 
@@ -128,5 +123,7 @@ def contribution():
             flash('Please upload a valid image file (JPG, PNG, GIF).', 'danger')
 
     return render_template('contribution.html', profile=profile, contributed_images=contributed_images)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
